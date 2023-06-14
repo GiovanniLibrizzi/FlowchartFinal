@@ -68,8 +68,14 @@ public class ViewProgressPanel extends WorkingPanel{
         Result<Record5<Long, String, String, Integer, Integer>> user = DB.getUserByUsername(Repository.getInstance().getCurrentUser());
         Result<Record5<Long, String, String, String, String>> flowProbs = DB.getFlowchartProblems();
         Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> codeProbs = DB.getCodeProblems();
-        double flowProg = (((double)user.get(0).value4()) / flowProbs.size())*100;
-        double codeProg = (((double)user.get(0).value5()) / codeProbs.size())*100;
+        int current_flowchart_problem = user.get(0).value4();
+        if(current_flowchart_problem > 0)
+            current_flowchart_problem--;
+        int current_code_problem = user.get(0).value5();
+        if(current_code_problem > 0)
+            current_code_problem--;
+        double flowProg = (((double)current_flowchart_problem) / flowProbs.size())*100;
+        double codeProg = (((double)current_code_problem) / codeProbs.size())*100;
         flowProg =  (double) Math.round(flowProg * 100) / 100;
         codeProg =  (double) Math.round(codeProg * 100) / 100;
         JLabel flowProgLabel = new JLabel("You're " + flowProg + "% done with flowchart problems!");
