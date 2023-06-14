@@ -1,11 +1,16 @@
 package Handlers;
 
+import Database.CodeProblems;
 import Database.DB;
 import Panels.CodeMetricsCodePanel;
+import Problem_Engine.DatabaseProblemInserter;
+import org.jooq.Record;
 import org.jooq.Record9;
 import org.jooq.Result;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
+import java.util.ArrayList;
 
 public class CodeMetricHandler{
     private static CodeMetricHandler codeMetricHandler = null;
@@ -15,9 +20,15 @@ public class CodeMetricHandler{
     private static int lloc;
     private static int cc;
     private int problemNum;
+
+    private ArrayList<String> codeProblems = new ArrayList<>();
     private CodeMetricHandler(){
-        this.problemNum = 1;
+        this.problemNum = 0;
+        for(int i = 0; i < DatabaseProblemInserter.getResultSize(CodeProblems.CODE_PROBLEMS_TABLE); i++){
+            codeProblems.add(DatabaseProblemInserter.retrieveCodeProblems(i).getProblem());
+        }
     }
+
     public static CodeMetricHandler getInstance(){
         if(codeMetricHandler == null){
             codeMetricHandler = new CodeMetricHandler();
@@ -27,12 +38,12 @@ public class CodeMetricHandler{
 
     public String getCurrProblem(){
         try{
-            Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> result = DB.getCodeProblemByID(problemNum);
-            String codeProblem = (String) result.get(0).value3();
+            String codeProblem = codeProblems.get(problemNum);
             System.out.println(codeProblem);
             return codeProblem;
         } catch(Error e){
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "No more questions! Good Job!");
         }
         return "could not load problem from database";
     }
@@ -46,11 +57,16 @@ public class CodeMetricHandler{
 
     public void submit(){
         try{
-            Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> result = DB.getCodeProblemByID(problemNum);
-            int correctloc = result.get(0).value6();
-            int correcteloc = result.get(0).value7();
-            int correctlloc = result.get(0).value8();
-            int correctcc = result.get(0).value9();
+            Result<Record> result = DatabaseProblemInserter.getDsl().select()
+                    .from(CodeProblems.CODE_PROBLEMS_TABLE)
+                    .fetch();
+            Record record = result.get(problemNum);
+
+            int correctloc = record.get(CodeProblems.CODE_PROBLEMS_TABLE.field("loc", Integer.class));
+            int correcteloc = record.get(CodeProblems.CODE_PROBLEMS_TABLE.field("eloc", Integer.class));
+            int correctlloc = record.get(CodeProblems.CODE_PROBLEMS_TABLE.field("lloc", Integer.class));
+            int correctcc = record.get(CodeProblems.CODE_PROBLEMS_TABLE.field("cc", Integer.class));
+
             if(loc == correctloc && eloc == correcteloc && lloc == correctlloc && cc == correctcc){
                 JOptionPane.showMessageDialog(null, "Correct Answer!");
                 this.problemNum += 1;

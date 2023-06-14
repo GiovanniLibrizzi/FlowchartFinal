@@ -38,6 +38,6 @@ public class CodeMetricsCodePanel extends JPanel {
         CodeMetricHandler codeMetricHandler = CodeMetricHandler.getInstance();
         String currentProblem = codeMetricHandler.getCurrProblem();
         //Add to TextArea for display
-        currentCode = new JTextArea(currentProblem);
+        currentCode.setText(currentProblem);
     }
 }

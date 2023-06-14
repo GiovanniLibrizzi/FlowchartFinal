@@ -47,9 +47,9 @@ public class MetricAnswerPanel extends JPanel {
         metrics[0] = Integer.MAX_VALUE;
         try{
             metrics[0] = Integer.parseInt(locField.getText());
-            metrics[1] = Integer.parseInt(locField.getText());
-            metrics[2] = Integer.parseInt(locField.getText());
-            metrics[3] = Integer.parseInt(locField.getText());
+            metrics[1] = Integer.parseInt(elocField.getText());
+            metrics[2] = Integer.parseInt(llocField.getText());
+            metrics[3] = Integer.parseInt(ccField.getText());
             return metrics;
         } catch(Exception e){
             JOptionPane.showMessageDialog(null, "Please input numbers only!");

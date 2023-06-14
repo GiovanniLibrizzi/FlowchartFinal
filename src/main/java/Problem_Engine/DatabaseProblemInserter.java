@@ -19,6 +19,10 @@ public class DatabaseProblemInserter {
 
     private static final DSLContext dsl = DSL.using(DB.configure());
 
+    public static DSLContext getDsl(){
+        return dsl;
+    }
+
     public static void insertCodeProblem(String problemText, String solutionText) {
         // Define the table fields explicitly
         Field<String> problem = DSL.field("problem", SQLDataType.VARCHAR);
