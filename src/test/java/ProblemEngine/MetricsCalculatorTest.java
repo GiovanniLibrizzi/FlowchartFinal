@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.*;
+package ProblemEngine;
 
 import Problem_Engine.MetricsCalculator;
 import org.junit.jupiter.api.Assertions;
@@ -6,6 +6,14 @@ import org.junit.jupiter.api.Test;
 
 class MetricsCalculatorTest {
 
+    //Test with null
+    @Test
+    void calculateMetricWithNull(){
+        int[] expectedResult = {0,0,0,0};
+        Assertions.assertArrayEquals(expectedResult,MetricsCalculator.calculateMetrics(null));
+    }
+
+    //Test with EmptyString
     @Test
     void calculateMetricsTestWithEmtpyString() {
         int[] expectedResult = {1,1,0,1};

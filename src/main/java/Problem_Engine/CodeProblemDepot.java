@@ -77,4 +77,8 @@ public class CodeProblemDepot {
         counterFlowchart = v;
     }
 
+    public int getSizeOfCodeProblems(){
+        return codeProblems.size();
+    }
+
 }
