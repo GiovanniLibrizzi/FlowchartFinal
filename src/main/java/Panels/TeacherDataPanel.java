@@ -39,7 +39,11 @@ public class TeacherDataPanel extends WorkingPanel{
         scrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI(PanelConstants.CUSTOM_BLACK, PanelConstants.CUSTOM_WHITE));
 
         JPanel leftPanel = new JPanel(new GridLayout(2,0));
-        JPanel leftTop = new JPanel((new GridLayout(0,2)));
+        JPanel leftTop = new JPanel((new GridLayout(2,1)));
+        JPanel leftTopTop = new JPanel((new GridLayout(1, 2)));
+        leftTop.add(leftTopTop);
+        JPanel leftTopBottom = new JPanel(new BorderLayout());
+        leftTop.add(leftTopBottom);
         JPanel leftBottom = new JPanel(new BorderLayout());
 
         ImageIcon imageIcon = new javax.swing.ImageIcon("resources/ducky.png");
@@ -52,9 +56,13 @@ public class TeacherDataPanel extends WorkingPanel{
         JLabel productNameLabel = new JLabel("Data View");
         productNameLabel.setFont(new Font("Dialog", Font.BOLD, 30));
         productNameLabel.setForeground(PanelConstants.CUSTOM_GREY);
+        JLabel welcomeLabel = new JLabel("Welcome, " + Repository.getInstance().getCurrentUser() + "!", JLabel.CENTER);
+        welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 30));
+        welcomeLabel.setForeground(PanelConstants.CUSTOM_GREY);
 
-        leftTop.add(duck);
-        leftTop.add(productNameLabel);
+        leftTopTop.add(duck);
+        leftTopTop.add(productNameLabel);
+        leftTopBottom.add(welcomeLabel, BorderLayout.CENTER);
 
         // panel for checkList
         JPanel checkListPanel = new JPanel(new GridLayout(2,2));

@@ -156,7 +156,7 @@ public class DB {
     }
 
     // to use this:
-    // Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> flowProbs = DB.getFlowchartProblems();
+    // Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> codeProbs = DB.getCodeProblems();
     // returns all CodeProblems with their id, problem, answer, hint, flowchart, loc, eloc, lloc, and cc
     public static Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> getCodeProblems(){
         // Obtain the jOOQ DSLContext using your configured DB class

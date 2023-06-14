@@ -32,6 +32,7 @@ public class Main extends JFrame {
         panelHandler.getContentPane().setBackground(PanelConstants.CUSTOM_GREY);
         panelHandler.setSize(900, 700);
         panelHandler.setVisible(true);
+        panelHandler.setTitle("BasicCodeGenius");
     }
 
 

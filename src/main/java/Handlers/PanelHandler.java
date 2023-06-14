@@ -22,7 +22,8 @@ public class PanelHandler extends JFrame {
         CodeMetricProblem,
         TeacherView,
         TeacherData,
-        TeacherProblem
+        TeacherProblem,
+        ViewProgress
     }
     private static PanelHandler panelHandler;
 
@@ -154,6 +155,9 @@ public class PanelHandler extends JFrame {
                 break;
             case TeacherProblem:
                 newPanel = new TeacherProblemPanel();
+                break;
+            case ViewProgress:
+                newPanel = new ViewProgressPanel();
                 break;
         }
 

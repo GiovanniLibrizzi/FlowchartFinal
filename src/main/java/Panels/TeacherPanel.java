@@ -1,6 +1,7 @@
 package Panels;
 import Database.DB;
 import Handlers.PanelHandler;
+import Handlers.Repository;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,10 @@ public class TeacherPanel extends WorkingPanel {
         productDescriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         productDescriptionLabel.setFont(new Font("Consolas", Font.BOLD, 36));
         productDescriptionLabel.setForeground(color);
+        JLabel welcomeLabel = new JLabel("Welcome, " + Repository.getInstance().getCurrentUser() + "!" );
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        welcomeLabel.setFont(new Font("Consolas", Font.BOLD, 36));
+        welcomeLabel.setForeground(color);
 
         problemButton = new RoundedButton("Create Custom Problems",200, PanelConstants.CUSTOM_WHITE, PanelConstants.CUSTOM_BLACK);
         dataButton = new RoundedButton("View Student Data",200, PanelConstants.CUSTOM_WHITE, PanelConstants.CUSTOM_BLACK);
@@ -44,7 +49,12 @@ public class TeacherPanel extends WorkingPanel {
             }
         });
 
-        add(productDescriptionLabel);
+        JPanel top = new JPanel(new GridLayout(2, 1));
+        top.setBackground(PanelConstants.CUSTOM_BLACK);
+        top.add(productDescriptionLabel);
+        top.add(welcomeLabel);
+
+        add(top);
         add(problemButton);
         add(dataButton);
         add(logOutButton);

@@ -15,6 +15,8 @@ import java.util.Observable;
  */
 public class Repository extends Observable {
 
+    private String currentUser = "";
+
     private Flowchart flowchart = new Flowchart();
 
     private List<Shape> unremovableShapesList = new ArrayList<>();
@@ -31,6 +33,18 @@ public class Repository extends Observable {
             repo = new Repository();
         return repo;
     }
+
+    /**
+     * Gets the current user
+     * @return current user
+     */
+    public String getCurrentUser(){return currentUser;}
+
+    /**
+     * sets the current user
+     * @param user the user who just logged in
+     */
+    public void setCurrentUser(String user){currentUser = user;}
 
     /**
      * Gets the currently selected shape
