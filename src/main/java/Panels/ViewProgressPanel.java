@@ -1,6 +1,10 @@
 package Panels;
+import Database.DB;
 import Handlers.PanelHandler;
 import Handlers.Repository;
+import org.jooq.Record5;
+import org.jooq.Record9;
+import org.jooq.Result;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,13 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
-/**
- * This Panels.MainMenuPanel class represents the JPanel with two navigation buttons that bring
- * you to either the Panels.FlowChartProblemPage or the CodingProblemPage
- * @author Jacob Balikov, Giovanni Librizzi, Jin Wu, Amogh Prajapat, Stefan Lutsch
- */
-public class MainMenuPanel extends WorkingPanel {
-    public MainMenuPanel(){
+public class ViewProgressPanel extends WorkingPanel{
+    public ViewProgressPanel(){
         // Initializing all JPanels
         int i = 3;
         int j = 3;
@@ -59,19 +58,41 @@ public class MainMenuPanel extends WorkingPanel {
         imageIcon = new ImageIcon(image);
         duckTutor.setIcon(imageIcon);
         panelHolder[0][1].add(duckTutor);
-        JLabel selectOptionLabel = new JLabel("<html>Welcome, <br/>" + Repository.getInstance().getCurrentUser() +"!</html>");
+        JLabel selectOptionLabel = new JLabel("<html>You're doing great,<br/>" + Repository.getInstance().getCurrentUser() + "!</html>");
         selectOptionLabel.setFont(new Font("Dialog", Font.BOLD, 16));
         selectOptionLabel.setForeground(color);
         panelHolder[0][1].add(selectOptionLabel);
 
         // panelHolder[1][1]
-        panelHolder[1][1].setLayout(new GridLayout(3, 1));
-        JButton flowProbButton = new RoundedButton("Work On FlowChart Problem",25);
-        JButton codeProbButton = new RoundedButton("Work On Coding Problem",25);
-        JButton codeMetricButton = new RoundedButton("Work On Code Metric Problem", 25);
-        panelHolder[1][1].add(flowProbButton);
-        panelHolder[1][1].add(codeProbButton);
-        panelHolder[1][1].add(codeMetricButton);
+        panelHolder[1][1].setLayout(new GridLayout(6, 1));
+        Result<Record5<Long, String, String, Integer, Integer>> user = DB.getUserByUsername(Repository.getInstance().getCurrentUser());
+        Result<Record5<Long, String, String, String, String>> flowProbs = DB.getFlowchartProblems();
+        Result<Record9<Long, String, String, String, String, Integer, Integer, Integer, Integer>> codeProbs = DB.getCodeProblems();
+        double flowProg = (((double)user.get(0).value4()) / flowProbs.size())*100;
+        double codeProg = (((double)user.get(0).value5()) / codeProbs.size())*100;
+        flowProg =  (double) Math.round(flowProg * 100) / 100;
+        codeProg =  (double) Math.round(codeProg * 100) / 100;
+        JLabel flowProgLabel = new JLabel("You're " + flowProg + "% done with flowchart problems!");
+        flowProgLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
+        flowProgLabel.setForeground(color);
+        JProgressBar flowProgBar = new JProgressBar(0, 100);
+        flowProgBar.setValue((int)flowProg);
+        JLabel codeProgLabel = new JLabel("You're " + codeProg + "% done with code problems!");
+        codeProgLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
+        codeProgLabel.setForeground(color);
+        JProgressBar codeProgBar = new JProgressBar(0, 100);
+        codeProgBar.setValue((int)codeProg);
+        JLabel codeMetricProgLabel = new JLabel("You're " + codeProg + "% done with code metric problems!");
+        codeMetricProgLabel.setFont(new Font("Dialog", Font.ITALIC, 13));
+        codeMetricProgLabel.setForeground(color);
+        JProgressBar codeMetricProgBar = new JProgressBar(0, 100);
+        codeMetricProgBar.setValue((int)codeProg);
+        panelHolder[1][1].add(flowProgLabel);
+        panelHolder[1][1].add(flowProgBar);
+        panelHolder[1][1].add(codeProgLabel);
+        panelHolder[1][1].add(codeProgBar);
+        panelHolder[1][1].add(codeMetricProgLabel);
+        panelHolder[1][1].add(codeMetricProgBar);
 
         // panelHolder[2][2]
         JPanel[] holderFor22 = new JPanel[4];
@@ -80,32 +101,18 @@ public class MainMenuPanel extends WorkingPanel {
             holderFor22[i].setBackground(PanelConstants.CUSTOM_WHITE);
         }
         panelHolder[2][2].setLayout(new GridLayout(4, 1));
+        JButton mainMenuButton = new RoundedButton("Main Menu", 25);
         JButton logoutButton = new RoundedButton("Logout", 25);
-        JButton viewProgressButton = new RoundedButton("View Your Progress", 25);
-        holderFor22[2].add(viewProgressButton);
+        holderFor22[2].add(mainMenuButton);
         holderFor22[3].add(logoutButton);
         for(JPanel jPanel : holderFor22){
             panelHolder[2][2].add(jPanel);
         }
 
-        codeProbButton.addActionListener(new ActionListener() {
+        mainMenuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.FlowChartProblem);
-            }
-        });
-
-        flowProbButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.CodeProblem);
-            }
-        });
-
-        codeMetricButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.CodeMetricProblem);
+                PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.MainMenu);
             }
         });
 
@@ -115,19 +122,10 @@ public class MainMenuPanel extends WorkingPanel {
                 PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.Login);
             }
         });
-
-        viewProgressButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                PanelHandler.getInstance().switchWorkingPanel(PanelHandler.Panel.ViewProgress);
-            }
-        });
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
     }
-
-
 }
