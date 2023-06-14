@@ -1,1 +1,0 @@
-[{"type":"Parallelogram","x1":143,"y1":148,"label":"int a"},{"type":"RectangleStandard","x1":141,"y1":260,"label":"a \u003d a + 1;"},{"type":"Parallelogram","x1":144,"y1":373,"label":"print a"}]~~~[{"label":"","id1":0,"id2":1},{"label":"","id1":1,"id2":2}]
