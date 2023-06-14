@@ -186,8 +186,10 @@ public class Repository extends Observable {
      * Clears all shapes and lines, updates observers
      */
     public void clear(){
-        flowchart.getShapes().clear();
-        flowchart.getLines().clear();
+        if(flowchart != null) {
+            flowchart.getShapes().clear();
+            flowchart.getLines().clear();
+        }
         setChanged();
         notifyObservers();
     }
