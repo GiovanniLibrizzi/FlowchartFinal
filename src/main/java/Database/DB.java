@@ -473,5 +473,40 @@ public class DB {
         }
     }
 
+    public static boolean updateUserFlowchartProgress(String username, int progress) {
+
+        DSLContext dsl = DSL.using(DB.configure());
+
+        Field<Integer> flProb = DSL.field("current_problem_flowchart", SQLDataType.INTEGER);
+        Field<String> usrname = DSL.field("username", SQLDataType.VARCHAR);
+        try {
+            dsl.update(Users.USERS_TABLE)
+                    .set(flProb, progress)
+                    .where(usrname.eq(username))
+                    .execute();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static int getUserFlowchartProgress(String username) {
+
+        DSLContext dsl = DSL.using(DB.configure());
+
+        Field<Integer> current_problem_flowchart = DSL.field("current_problem_flowchart", SQLDataType.INTEGER);
+        Field<String> usrname = DSL.field("username", SQLDataType.VARCHAR);
+        try {
+            Result<Record1<Integer>> result =
+                    dsl.select(current_problem_flowchart)
+                    .from(Users.USERS_TABLE)
+                    .where(usrname.eq(username))
+                    .fetch();
+            return result.get(0).get(Users.USERS_TABLE.field("current_problem_flowchart", Integer.class));
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
 }
 

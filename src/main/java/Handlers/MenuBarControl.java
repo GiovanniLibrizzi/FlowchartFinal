@@ -40,8 +40,10 @@ public class MenuBarControl implements ActionListener {
                 break;
             case "Load file":
                 String loadFile = JOptionPane.showInputDialog("Enter File to Load:");
-                repo.clear();
-                repo.add(SaveManager.getSaveManager().load(loadFile));
+                if (loadFile != null) {
+                    repo.clear();
+                    repo.add(SaveManager.getSaveManager().load(loadFile));
+                }
                 break;
             case "Undo Shape":
                 repo.undoShape();

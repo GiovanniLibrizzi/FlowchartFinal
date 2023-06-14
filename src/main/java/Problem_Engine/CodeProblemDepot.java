@@ -54,6 +54,7 @@ public class CodeProblemDepot {
         return flowchartProblems.get(counterFlowchart);
     }
 
+
     public CodeProblem getNextProblem() {
         counter++;
         return getCurrentProblem();
@@ -62,6 +63,18 @@ public class CodeProblemDepot {
     public FlowchartProblem getNextFlowchartProblem() {
         counterFlowchart++;
         return getCurrentFlowchartProblem();
+    }
+
+    public int getCounterFlowchart() {
+        return counterFlowchart;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounterFlowchart(int v) {
+        counterFlowchart = v;
     }
 
 }

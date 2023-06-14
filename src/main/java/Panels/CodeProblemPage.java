@@ -1,5 +1,7 @@
 package Panels;
+import Database.DB;
 import Handlers.*;
+import Problem_Engine.CodeProblem;
 import Problem_Engine.CodeProblemDepot;
 import Problem_Engine.FlowchartProblem;
 import Shapes.ConnectingLine;
@@ -29,6 +31,7 @@ public class CodeProblemPage extends WorkingPanel {
         JPanel leftPanel = new JPanel();
         JPanel midPanel = new JPanel();
         FlowchartCodeBlanksPanel codePanel = new FlowchartCodeBlanksPanel();
+        codePanel.updateProblem(DB.getUserFlowchartProgress(Repository.getInstance().getCurrentUser()));
         JPanel submitPanel = new CodeEntryPanel();
         diagramPanel = new Workspace();
 
@@ -87,6 +90,8 @@ public class CodeProblemPage extends WorkingPanel {
         this.add(diagramPanel);
         this.add(codePanel);
 
+
+
         JButton next = new RoundedButton("Next", 25);
         next.setVisible(false);
         codePanel.add(next);
@@ -110,6 +115,8 @@ public class CodeProblemPage extends WorkingPanel {
                 } else {
                     tutorPanel.setText("Correct! Great job!");
                     next.setVisible(true);
+                    DB.updateUserFlowchartProgress(Repository.getInstance().getCurrentUser(), CodeProblemDepot.getInstance().getCounterFlowchart()+2);
+
                 }
 
             }

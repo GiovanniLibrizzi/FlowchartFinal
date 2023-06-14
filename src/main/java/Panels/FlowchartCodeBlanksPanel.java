@@ -38,6 +38,11 @@ public class FlowchartCodeBlanksPanel extends JPanel {
         givenCode.setText("<html>" + codeProblemDepot.getCurrentFlowchartProblem().getProblem() + "</html>");
     }
 
+    public void updateProblem(int v) {
+        codeProblemDepot.setCounterFlowchart(v);
+        givenCode.setText(codeProblemDepot.getCurrentFlowchartProblem().getProblem());
+    }
+
     public void updateProblem(FlowchartProblem problem) {
         givenCode.setText(problem.getProblem());
     }
